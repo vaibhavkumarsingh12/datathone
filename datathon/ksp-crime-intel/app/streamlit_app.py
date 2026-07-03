@@ -134,7 +134,7 @@ with tab_time:
 
 # ---------------- TAB: Alerts ----------------
 with tab_alert:
-    z_t = st.slider("Alert threshold (z-score)", 1.5, 4.0, 2.0, 0.1)
+    z_t = st.slider("Alert threshold (z-score)", 1.5, 4.0, 2.5, 0.1)
     alerts = m1.spike_alerts(cases if sel_head == "All" and sel_type == "All" else f,
                              z_thresh=z_t)
     if alerts.empty:

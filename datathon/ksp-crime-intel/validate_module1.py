@@ -47,7 +47,7 @@ report("V2 · Hotspot precision", 0 < len(summ) <= 8,
        f"organic density clusters is fine — 40 means eps is too loose)")
 
 # ---- V3: alerts fire on both planted spikes ----
-alerts = m1.spike_alerts(df, z_thresh=7.0)
+alerts = m1.spike_alerts(df, z_thresh=2.5)
 hits = 0
 spike_truth = [("Kalaburagi", "2024-11"), ("Raichur", "2025-06")]
 akey = set(zip(alerts.DistrictName, alerts.ym))
@@ -60,7 +60,7 @@ report("V3 · Alerts fire on planted spikes", hits == 2,
 # ---- V4: alerts aren't spammy ----
 n_al = len(alerts)
 report("V4 · Alert precision", n_al <= 25,
-       f"{n_al} total alerts at z≥7.0 across 36 months × 31 districts × 22 types "
+       f"{n_al} total alerts at z≥2.5 across 36 months × 31 districts × 22 types "
        f"(≤25 keeps the tab credible; hundreds = threshold too low)")
 
 # ---- V5: planted time bias visible ----

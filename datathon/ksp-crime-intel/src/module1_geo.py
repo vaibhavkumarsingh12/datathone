@@ -51,11 +51,20 @@ def spike_alerts(df: pd.DataFrame, z_thresh: float = 2.0, window: int = 6,
         s = g.set_index("ym")["n"].reindex(all_months, fill_value=0)
         mean = s.shift(1).rolling(window, min_periods=min_history).mean()
         std = s.shift(1).rolling(window, min_periods=min_history).std().replace(0, np.nan)
-        z = (s - mean) / std
-        for ym, zval in z.dropna().items():
-            if zval >= z_thresh:
+        for ym in mean.dropna().index:
+            count = s[ym]
+            zval = None
+            if pd.notna(std[ym]) and std[ym] > 0:
+                zval = (count - mean[ym]) / std[ym]
+
+            is_eruption = count >= 15 and count >= 3 * max(mean[ym], 1)
+            is_surge = (count >= 8 and mean[ym] >= 3
+                        and zval is not None and zval >= z_thresh)
+
+            if is_eruption or is_surge:
                 rows.append({"DistrictName": dist, "CrimeType": ct, "ym": ym,
-                             "cases": int(s[ym]), "baseline": round(float(mean[ym]), 1),
-                             "z": round(float(zval), 2)})
+                             "cases": int(count), "baseline": round(float(mean[ym]), 1),
+                             "z": round(float(zval), 2) if zval is not None else None,
+                             "kind": "eruption" if is_eruption else "surge"})
     return (pd.DataFrame(rows).sort_values("z", ascending=False).reset_index(drop=True)
-            if rows else pd.DataFrame(columns=["DistrictName","CrimeType","ym","cases","baseline","z"]))
+            if rows else pd.DataFrame(columns=["DistrictName","CrimeType","ym","cases","baseline","z", "kind"]))
