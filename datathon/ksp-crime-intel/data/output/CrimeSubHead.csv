@@ -1,0 +1,23 @@
+CrimeSubHeadID,CrimeHeadID,CrimeHeadName
+101,1,Murder
+102,1,Attempt to Murder
+103,1,Grievous Hurt
+104,1,Simple Hurt
+105,1,Kidnapping
+201,2,House Burglary
+202,2,Theft
+203,2,Chain Snatching
+204,2,Vehicle Theft
+205,2,Robbery
+206,2,Dacoity
+301,3,Cheating / Fraud
+302,3,Online Financial Fraud
+303,3,Cyber Harassment
+401,4,Assault on Women
+402,4,Dowry-related
+403,4,Domestic Cruelty
+501,5,Rioting
+502,5,Unlawful Assembly
+503,5,Public Nuisance
+601,6,Drug Possession
+602,6,Drug Trafficking

@@ -1,0 +1,7 @@
+# Ignore the secret truth data (leak path prevention)
+data/ground_truth/
+ground_truth/
+
+# Python
+__pycache__/
+*.pyc
