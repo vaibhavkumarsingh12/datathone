@@ -1,0 +1,13 @@
+# SPEAR dark theme — Karnataka Crime Intelligence
+# Place this folder (.streamlit) next to the app file you run.
+
+[theme]
+base = "dark"
+primaryColor = "#4C87D8"          # --accent (dark theme)
+backgroundColor = "#090F17"       # --bg-app
+secondaryBackgroundColor = "#111A26"  # --bg-surface
+textColor = "#E8EDF2"             # --text-primary
+font = "sans serif"
+
+[server]
+headless = true

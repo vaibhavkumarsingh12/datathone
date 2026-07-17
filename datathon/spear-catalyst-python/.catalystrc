@@ -1,0 +1,10 @@
+{
+  "project": {
+    "id": "43390000000031001",
+    "name": "spear-crime-intel"
+  },
+  "environment": {
+    "id": "43390000000031024",
+    "name": "Development"
+  }
+}
