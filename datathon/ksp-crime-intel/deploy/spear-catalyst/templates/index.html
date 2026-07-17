@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPEAR — KSP Crime Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/spear.css">
+<script src="/static/js/plotly.min.js"></script>
+<script src="/static/js/vis-network.min.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><div class="mark">S</div>
+    <div><div class="brand-name">SPEAR</div>
+         <div class="brand-sub">Crime Intelligence</div></div></div>
+  <hr>
+  <label>Crime category</label><select id="f-head"></select>
+  <label>Crime type</label><select id="f-type"></select>
+  <label>From</label><input type="date" id="f-from">
+  <label>To</label><input type="date" id="f-to">
+  <button id="f-reset">Reset filters</button>
+  <div class="build" id="build-info"></div>
+</aside>
+
+<main>
+  <div class="eyebrow">Spatial · Pattern · Entity-network · Anomaly · Risk</div>
+  <h1>Karnataka Crime Intelligence Platform</h1>
+  <p class="caption">Synthetic data grounded in NCRB/SCRB aggregates ·
+     KSP Datathon 2026 · <span id="cap-meta"></span></p>
+
+  <nav class="tabs" id="tabs">
+    <button data-tab="overview" class="on">Overview</button>
+    <button data-tab="map">District Map</button>
+    <button data-tab="hot">Hotspots</button>
+    <button data-tab="time">Time Patterns</button>
+    <button data-tab="alerts">Alerts</button>
+    <button data-tab="network">🕸️ Network</button>
+    <button data-tab="risk">Risk</button>
+    <button data-tab="anom">Anomalies</button>
+    <button data-tab="valid">✅ Validation</button>
+  </nav>
+
+  <section id="tab-overview" class="tab on">
+    <div class="stats" id="ov-stats"></div>
+    <div class="card"><div id="ov-monthly"></div></div>
+    <div class="card"><div id="ov-types"></div></div>
+  </section>
+
+  <section id="tab-map" class="tab">
+    <div class="card"><div id="map-choro"></div></div>
+    <h3>Drill-down: stations in a district</h3>
+    <select id="map-district"></select>
+    <div class="card"><div id="map-stations"></div></div>
+    <div class="card" id="map-table"></div>
+  </section>
+
+  <section id="tab-hot" class="tab">
+    <div class="controls">
+      <label>Scope <select id="hot-scope"></select></label>
+      <label>Cluster radius (km) <select id="hot-eps"></select></label>
+      <label>Min cases per hotspot <select id="hot-mins"></select></label>
+    </div>
+    <p class="note">Hotspots are precomputed over the full reporting period — the
+      stable clusters patrol allocation should act on. Sidebar date filter does not
+      apply here.</p>
+    <div id="hot-msg"></div>
+    <div class="card"><div id="hot-map"></div></div>
+    <div class="card" id="hot-table"></div>
+  </section>
+
+  <section id="tab-time" class="tab">
+    <div class="card"><div id="time-heat"></div></div>
+    <p class="note">Filter to a single crime type — Chain Snatching glows on weekend
+      evenings; House Burglary glows at night.</p>
+  </section>
+
+  <section id="tab-alerts" class="tab">
+    <div class="controls">
+      <label>Alert threshold (z-score)
+        <input type="range" id="al-z" min="1.5" max="4" step="0.1" value="2.5">
+        <span id="al-zv">2.5</span></label>
+    </div>
+    <div id="al-msg"></div>
+    <div class="card" id="al-table"></div>
+    <div class="card"><div id="al-hist"></div></div>
+  </section>
+
+  <section id="tab-network" class="tab">
+    <div class="stats" id="net-stats"></div>
+    <div class="card">
+      <h3>🔎 Entity resolution in action — one person, many names</h3>
+      <select id="net-alias"></select>
+      <pre id="net-alias-list"></pre>
+      <p class="note">The official KSP schema records each of these as an unrelated
+        accused; its own PersonID resets every case. SPEAR's entity resolution stitches
+        them into one person — the prerequisite for every edge in the graph below.</p>
+    </div>
+    <div class="controls">
+      <label>Min community size <select id="net-min"></select></label>
+      <label>Focus on suspected ring <select id="net-comm"></select></label>
+    </div>
+    <div class="card"><div id="net-graph" style="height:640px"></div></div>
+    <h3>👑 Top connectors (betweenness centrality)</h3>
+    <div class="card" id="net-kings"></div>
+    <h3>🕵️ Suspected ring profiles</h3>
+    <div class="card" id="net-comms"></div>
+  </section>
+
+  <section id="tab-risk" class="tab">
+    <h3>🎯 Predictive Risk — where should patrols be next month?</h3>
+    <div class="stats" id="risk-stats"></div>
+    <div class="controls"><label>Month <select id="risk-month"></select></label></div>
+    <div class="card"><div id="risk-surface"></div></div>
+    <div class="card"><div id="risk-backtest"></div></div>
+    <h3>📚 The why behind the where — socio-economic drivers</h3>
+    <div class="grid2">
+      <div class="card"><div id="risk-corr"></div></div>
+      <div class="card">
+        <div id="risk-reg"></div>
+        <p class="note">OLS: crime per 100k on district covariates. Literacy's negative,
+          significant coefficient is the "why" the risk model quietly uses.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-anom" class="tab">
+    <h3>🚨 Anomalies — the incidents that don't fit</h3>
+    <div class="stats" id="anom-stats"></div>
+    <h3>Case-level: top anomalous incidents (with reasons)</h3>
+    <div class="card" id="anom-cases"></div>
+    <h3>Cell-level: volume anomalies over time</h3>
+    <div class="card"><div id="anom-scatter"></div></div>
+    <p class="note">Every point above the line is a month where a district×crime cell
+      erupted beyond its own history — the continuous version of the Module 1 alert system.</p>
+  </section>
+
+  <section id="tab-valid" class="tab">
+    <p class="note">Every number below was produced by <code>validate_module*.py</code>
+      against <code>data/ground_truth/</code> — patterns deliberately planted in the
+      synthetic data, then rediscovered by the platform. This is the proof the
+      algorithms work, not a claim that they do.</p>
+    <div id="valid-body"></div>
+  </section>
+</main>
+<script src="/static/js/spear.js"></script>
+</body>
+</html>

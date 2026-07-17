@@ -1,0 +1,9 @@
+{
+  "command": "python3 -u main.py",
+  "buildPath": ".",
+  "stack": "python_3_12",
+  "memory": 512,
+  "env_variables": {
+    "SPEAR_ENV": "catalyst"
+  }
+}

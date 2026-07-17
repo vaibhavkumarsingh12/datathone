@@ -1,0 +1,7 @@
+# RUNTIME (vendored into ./lib by deploy/vendor.py — Catalyst does not pip install this)
+flask==2.3.3
+waitress==3.0.0
+
+# NOT deployed. The science stack lives in the repo-root requirements.txt and runs
+# offline in deploy/precompute.py. Nothing below ever reaches Catalyst:
+#   pandas, numpy, scikit-learn, statsmodels, plotly, networkx, pyvis, rapidfuzz

@@ -1,0 +1,73 @@
+:root{
+  --bg:#090F17; --surface:#111A26; --surface2:#16212F; --inset:#0C141E;
+  --border:#26364A; --border-subtle:#1B2735; --text:#E8EDF2; --text2:#A4B2C1;
+  --muted:#6C7D90; --accent:#4C87D8; --critical:#EC7468; --warning:#E3B94A;
+  --success:#57C58C;
+}
+*{box-sizing:border-box}
+body{margin:0;display:flex;background:var(--bg);color:var(--text);
+  font-family:'IBM Plex Sans',system-ui,sans-serif}
+.sidebar{width:250px;min-height:100vh;background:var(--surface);
+  border-right:1px solid var(--border-subtle);padding:18px 16px;flex:0 0 250px}
+.brand{display:flex;align-items:center;gap:10px;padding-bottom:10px}
+.mark{width:34px;height:34px;border-radius:7px;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;color:#08111E;
+  font:700 15px 'IBM Plex Mono',monospace}
+.brand-name{font:600 15px 'IBM Plex Sans';line-height:1.15}
+.brand-sub{font:500 9.5px 'IBM Plex Sans Condensed';letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--border-subtle);margin:12px 0}
+label{display:block;font:600 11px 'IBM Plex Sans Condensed';letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin:14px 0 5px}
+select,input[type=date]{width:100%;background:var(--inset);color:var(--text);
+  border:1px solid var(--border);border-radius:6px;padding:7px 9px;font-size:13px}
+button{background:var(--inset);color:var(--text2);border:1px solid var(--border);
+  border-radius:6px;padding:7px 12px;font-size:13px;cursor:pointer;margin-top:16px}
+button:hover{background:#1B2836;color:var(--text)}
+.build{margin-top:24px;font:400 10.5px 'IBM Plex Mono',monospace;color:var(--muted);
+  line-height:1.6;word-break:break-all}
+main{flex:1;padding:22px 26px;max-width:1500px}
+.eyebrow{font:600 11px 'IBM Plex Sans Condensed';letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+h1{font:600 26px/1.2 'IBM Plex Sans';margin:0}
+h3{font:600 17px 'IBM Plex Sans';margin:22px 0 10px}
+.caption{font-size:13px;color:var(--muted);margin:4px 0 16px}
+.tabs{display:flex;gap:2px;background:var(--inset);padding:4px;border-radius:8px;
+  border:1px solid var(--border-subtle);width:fit-content;flex-wrap:wrap}
+.tabs button{margin:0;border:0;background:transparent;border-radius:6px;padding:7px 15px}
+.tabs button.on{background:#1B2836;color:var(--text)}
+.tab{display:none;margin-top:18px}
+.tab.on{display:block}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.stat{position:relative;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px 13px 18px;overflow:hidden}
+.stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--sa,var(--accent))}
+.stat-l{font:600 10.5px 'IBM Plex Sans Condensed';letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.stat-v{font:600 26px/1.1 'IBM Plex Sans';font-variant-numeric:tabular-nums}
+.stat-s{font-size:11.5px;color:var(--text2);margin-top:3px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:12px;margin:12px 0;overflow:auto}
+.controls{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;margin-bottom:6px}
+.controls label{margin:0}
+.controls select{width:auto;min-width:150px}
+.note{font-size:12px;color:var(--muted);margin:8px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font:600 10.5px 'IBM Plex Sans Condensed';letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);padding:8px;
+  border-bottom:1px solid var(--border)}
+td{padding:7px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text2)}
+tr:hover td{background:var(--surface2)}
+pre{background:var(--inset);border:1px solid var(--border);border-radius:6px;
+  padding:10px;font:400 12px 'IBM Plex Mono',monospace;color:var(--text2);
+  white-space:pre-wrap;margin:8px 0}
+.banner{padding:10px 14px;border-radius:8px;margin:10px 0;font-size:13px}
+.banner.err{background:rgba(236,116,104,.14);border:1px solid var(--critical);
+  color:var(--critical)}
+.banner.ok{background:rgba(87,197,140,.12);border:1px solid var(--success);
+  color:var(--success)}
+.pass{color:var(--success);font-weight:600}
+.fail{color:var(--critical);font-weight:600}
