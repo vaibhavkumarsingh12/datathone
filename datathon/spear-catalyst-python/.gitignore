@@ -1,0 +1,10 @@
+# Vendored dependencies (only needed for the Catalyst AppSail attempt; huge)
+lib/
+
+# Python caches / envs
+__pycache__/
+*.pyc
+.venv/
+
+# Catalyst runtime artifacts
+catalyst-debug.log
