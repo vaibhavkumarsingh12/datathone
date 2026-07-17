@@ -1,0 +1,71 @@
+========================================================================
+ SPEAR — KSP Crime Intelligence · Catalyst dashboard
+ WORKING CHECKPOINT — how to go back if a change breaks something
+========================================================================
+ Saved on: 2026-07-18
+ Live app: https://spear-intel-50043295151.development.catalystappsail.in
+ Git tag:  catalyst-working-v1     (commit 7eb59a9)
+
+ This exact state is saved in THREE places (any one can restore you):
+   1. This zip:  _backups/catalyst-working_2026-07-18_v1.zip
+   2. Git tag:   catalyst-working-v1  (local + GitHub)
+   3. GitHub:    github.com/vaibhavkumarsingh12/datathone  (branch main)
+
+------------------------------------------------------------------------
+ EASIEST RESTORE — from the zip  (no git needed)
+------------------------------------------------------------------------
+ If your edits broke the dashboard and you just want the working one back:
+
+   1. Delete the broken folder:
+        datathon/ksp-crime-intel/deploy/spear-catalyst
+   2. Unzip  _backups/catalyst-working_2026-07-18_v1.zip  into
+        datathon/ksp-crime-intel/deploy/
+      (it puts spear-catalyst/ and the deploy scripts back)
+   3. Redeploy:
+        cd datathon/ksp-crime-intel/deploy/spear-catalyst
+        catalyst deploy --only appsail -p 43390000000019001
+
+------------------------------------------------------------------------
+ RESTORE WITH GIT  (recommended — keeps history)
+------------------------------------------------------------------------
+ See what changed since the working version:
+        git status
+
+ Throw away ALL uncommitted changes and return to the last commit:
+        git checkout -- datathon/ksp-crime-intel/deploy
+
+ Jump the whole deploy folder back to the tagged working version:
+        git checkout catalyst-working-v1 -- datathon/ksp-crime-intel/deploy
+
+ Then redeploy (same command as above).
+
+------------------------------------------------------------------------
+ SAVE A NEW CHECKPOINT  (after you make changes that WORK)
+------------------------------------------------------------------------
+        cd <repo root: books/desktop-tutorial>
+        git add datathon/ksp-crime-intel/deploy
+        git commit -m "describe what you changed"
+        git tag catalyst-working-v2          (bump the number each time)
+        git push datathone main --tags
+        git push origin   main --tags
+
+------------------------------------------------------------------------
+ THE UPDATE LOOP  (reminder)
+------------------------------------------------------------------------
+ Changed DATA or analysis (Python/ML):
+     set PYTHONIOENCODING=utf-8
+     python deploy/precompute.py            (rebuilds data/spear.db)
+     then deploy (below)
+
+ Changed only the LOOK (charts/colours/layout): no precompute needed.
+     Edit files in deploy/spear-catalyst/{static,templates,queries.py,main.py}
+
+ Deploy (always from the spear-catalyst folder):
+     cd datathon/ksp-crime-intel/deploy/spear-catalyst
+     catalyst deploy --only appsail -p 43390000000019001
+
+ GOTCHAS (learned the hard way):
+   - app-config.json "stack" MUST be exactly:  python_3_12
+   - run precompute.py with PYTHONIOENCODING=utf-8 (Windows console)
+   - dependencies are vendored in lib/ — Catalyst does NOT pip install
+========================================================================
