@@ -1,0 +1,28 @@
+{
+  "risk_backtest": {
+    "mean_hit_rate": 0.475,
+    "random": 0.0293,
+    "lift": 16.2,
+    "persistence": 0.375
+  },
+  "planted_high_band_rate": 0.8,
+  "anomaly": {
+    "planted": 270,
+    "recovered": 73,
+    "recall_at_2pct": 0.27
+  },
+  "socio_econ": {
+    "literacy_coef": -18.881,
+    "literacy_p": 0.0003,
+    "literacy_r": -0.524
+  },
+  "band_calibration": {
+    "High": 1.24,
+    "Low": 0.2,
+    "Medium": 0.47
+  },
+  "anomaly_money_shot": [
+    10646,
+    10712
+  ]
+}
