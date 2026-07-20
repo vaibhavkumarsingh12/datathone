@@ -1,8 +1,0 @@
-{
-  "command": "python3 -m streamlit run app/streamlit_app.py --server.port $X_ZOHO_CATALYST_LISTEN_PORT --server.address 0.0.0.0 --server.enableCORS false --server.enableXsrfProtection false --server.enableWebsocketCompression false --server.headless true",
-  "build_path": ".",
-  "stack": "python39",
-  "env_variables": {},
-  "memory": 1024,
-  "scripts": {}
-}
