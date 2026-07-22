@@ -1,7 +1,15 @@
-# Ignore the secret truth data (leak path prevention)
-data/ground_truth/
-ground_truth/
+# Ground truth IS committed on purpose — judges need it to re-run the exams.
+# Only validate_*.py and data/phase6_validate.py ever read it. The platform
+# (src/, app/, deploy/) never opens this folder. See README → "The sealed exam".
 
 # Python
 __pycache__/
 *.pyc
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+
+# Local checkpoint archives (the restore guide is tracked, the zips are not)
+_backups/*.zip

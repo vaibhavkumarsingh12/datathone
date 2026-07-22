@@ -4,13 +4,16 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import json
 import sqlite3
 import pandas as pd
 from src import module1_geo as m1
 
 OUT = Path("data/output"); TRUTH = Path("data/ground_truth")
+REPORTS = Path("reports"); REPORTS.mkdir(exist_ok=True)
 PASS, FAIL = "✅ PASS", "❌ FAIL"
 results = []
+metrics = {}          # written to reports/module1_metrics.json — the dashboard quotes this
 def report(name, ok, detail):
     results.append(PASS if ok else FAIL)
     print(f"{PASS if ok else FAIL}  {name}\n        → {detail}")
@@ -70,8 +73,22 @@ share = cs.is_we_eve.mean()
 report("V5 · Weekend-evening bias visible (Chain Snatching)", share >= 0.35,
        f"{share:.0%} of chain snatching in Fri-Sun evenings (uniform would be ~11%)")
 
+metrics.update({
+    "hotspots": {"planted": 3, "recovered": int(recovered),
+                 "clusters_found": int(len(summ))},
+    "alerts": {"planted_spikes": 2, "flagged": int(hits),
+               "total_alerts_at_z2.5": int(n_al)},
+    "time_bias": {"crime_type": "Chain Snatching",
+                  "weekend_evening_share": round(float(share), 4),
+                  "uniform_baseline": 0.11},
+    "scorecard": f"{results.count(PASS)}/{len(results)}",
+})
+(REPORTS / "module1_metrics.json").write_text(
+    json.dumps(metrics, indent=2), encoding="utf-8")
+
 print("\n" + "=" * 60)
 print(f"SCORECARD: {results.count(PASS)}/{len(results)} passed")
+print("Metrics written → reports/module1_metrics.json")
 if FAIL in results:
     print("Tune the failing knob (eps/min_samples/z) and re-run.")
 else:

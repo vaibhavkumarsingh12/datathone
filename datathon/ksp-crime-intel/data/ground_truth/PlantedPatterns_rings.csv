@@ -1,0 +1,5 @@
+pattern_type,RingID,members,turf,tags
+ring,1,"[11634, 6151, 3587, 1165, 377, 9350, 2782, 7471]","[28, 9, 16]","[""narcotics"", ""market_area"", ""night_ops""]"
+ring,2,"[4951, 7762, 8991, 638, 2447, 9346, 7501, 2881]","[15, 8, 4]","[""interstate"", ""night_ops"", ""vehicle""]"
+ring,3,"[6397, 8506, 656, 1733, 11440, 7340, 10943]","[6, 12]","[""narcotics"", ""weapon""]"
+ring,4,"[4286, 8905, 11063, 3652, 8704]","[22, 13, 19]","[""market_area"", ""interstate""]"
