@@ -12,7 +12,7 @@
 [![Exams Passed](https://img.shields.io/badge/Blind_Exams-18%2F18_passed-57C58C?style=for-the-badge)](#-the-scorecard--every-claim-has-a-receipt)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](#-run-it-locally-in-3-commands)
 
-### 🔗 **[spear-intel-50043295151.development.catalystappsail.in](https://spear-intel-50043295151.development.catalystappsail.in)**
+### 🔗 **https://spear-intel-50043295151.catalystappsail.in/**
 
 *No login. No setup. Opens in about a second.*
 
