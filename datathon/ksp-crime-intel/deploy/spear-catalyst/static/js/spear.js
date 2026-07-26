@@ -416,3 +416,20 @@ async function drawValid() {
 }
 
 boot();
+
+/* ---- mobile filter drawer ---- */
+(function(){
+  var sb = document.querySelector('.sidebar');
+  if (!sb || document.getElementById('nav-toggle')) return;
+  var btn = document.createElement('button');
+  btn.id = 'nav-toggle'; btn.type = 'button';
+  btn.setAttribute('aria-label', 'Toggle filters'); btn.textContent = '\u2630';
+  var bd = document.createElement('div'); bd.id = 'nav-backdrop';
+  document.body.appendChild(btn); document.body.appendChild(bd);
+  function close(){ sb.classList.remove('open'); bd.classList.remove('on'); btn.textContent = '\u2630'; }
+  btn.addEventListener('click', function(){
+    var open = sb.classList.toggle('open'); bd.classList.toggle('on', open);
+    btn.textContent = open ? '\u2715' : '\u2630'; });
+  bd.addEventListener('click', close);
+  sb.addEventListener('change', function(){ if (window.innerWidth <= 820) close(); });
+})();
